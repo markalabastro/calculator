@@ -1,4 +1,6 @@
 function add(a, b) {
+  a = parseInt(a);
+  b = parseInt(b);
   return a + b;
 }
 
@@ -15,7 +17,9 @@ function divide(a, b) {
 }
 
 function operate(operator, a, b) {
-  if (operator === "+") {
+  console.log(operator, a, b);
+
+  if (operator == "+") {
     return add(a, b);
   } else if (operator === "-") {
     return subtract(a, b);
@@ -27,29 +31,37 @@ function operate(operator, a, b) {
 }
 
 function clear() {
-  numberArray = [];
+  numberString = "";
   display.value = "";
 }
 
 function changeSign() {
-  console.log(numberArray);
-  numberArray = Number(numberArray.join("") * -1);
-  display.value = numberArray;
+  console.log(numberString);
+  numberString = numberString * -1;
+  display.value = numberString;
 }
 
-let numberArray = [];
+let numberString = "";
 let display = document.querySelector("#display");
 let clearButton = document.getElementById("clear");
+let addButton = document.getElementById("add");
 let changeSignButton = document.getElementById("changeSign");
 let numberButtons = document.querySelectorAll(`button[data-num^='num']`);
 
 for (num of numberButtons) {
   num.addEventListener("click", (e) => {
-    numberArray.push(e.target.innerText);
-    let displayWindow = Number(numberArray.join(""));
-    display.value = displayWindow;
+    let addDigit = e.target.value;
+    numberString += addDigit;
+    let displayWindow = parseInt(numberString);
+    console.log(typeof displayWindow);
+    display.value = parseInt(displayWindow);
+    console.log(typeof display.value);
   });
 }
 
 clearButton.addEventListener("click", clear);
 changeSignButton.addEventListener("click", changeSign);
+addButton.addEventListener("click", () => {
+  display.value = "";
+  display.value = operate("+", numberString, numberString);
+});
