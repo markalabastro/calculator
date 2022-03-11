@@ -29,6 +29,9 @@ button {
 }
 
 #display {
-  width: 205px;
+  padding: 5px;
+  width: 201px;
   height: 40px;
+  background-color: white;
+  font-size: 2.3rem;
 }
