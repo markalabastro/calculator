@@ -54,6 +54,7 @@ let divideButton = document.getElementById("divide");
 let changeSignButton = document.getElementById("changeSign");
 let equalsButton = document.getElementById("equals");
 let decimalButton = document.getElementById("decimal");
+let percentButton = document.getElementById("percent");
 let numberButtons = document.querySelectorAll(`button[data-num^='num']`);
 
 for (num of numberButtons) {
@@ -105,5 +106,10 @@ equalsButton.addEventListener("click", () => {
 
 decimalButton.addEventListener("click", () => {
   numberString += ".";
+  display.textContent = numberString;
+});
+
+percentButton.addEventListener("click", () => {
+  numberString = numberString / 100;
   display.textContent = numberString;
 });
