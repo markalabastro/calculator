@@ -3,7 +3,7 @@ body {
 }
 
 button {
-  font-size: 1.3rem;
+  font-size: 1.9rem;
   width: 50px;
   height: 30px;
 }
@@ -24,7 +24,7 @@ button {
   border-radius: 15px;
 }
 
-[data-num0] {
+button[data-num="num0"] {
   width: 104px;
 }
 

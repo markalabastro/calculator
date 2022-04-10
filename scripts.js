@@ -1,70 +1,59 @@
-/* 
-1.push value into an Array
-2.push operator into an array
-3.push new value into an array
-4.unshift value;
-5.unshift operator;
-6.unshift value;
-7.send to operate to calculate amount
-8.
-*/
-
-function add(a, b) {
-  return a + b;
-}
-
-function subtract(a, b) {
-  return a - b;
-}
-
-function multiply(a, b) {
-  return a * b;
-}
-
-function divide(a, b) {
-  return a / b;
-}
-
 function operate(operator, a, b) {
   if (operator == "+") {
-    return add(a, b);
+    return a + b;
   } else if (operator === "-") {
-    return subtract(a, b);
+    return a - b;
   } else if (operator === "x") {
-    return multiply(a, b);
+    return a * b;
   } else if (operator === "/") {
-    return divide(a, b);
+    return a / b;
   }
 }
 
 function getNumber(e) {
   let addDigit = e.target.value;
   numberString += addDigit;
-  let displayWindow = numberString;
-  display.textContent = parseInt(displayWindow);
+  display.textContent = parseFloat(numberString);
 }
 
 function clear() {
   equationArray = [];
+  number1 = "";
+  number2 = "";
   numberString = "";
-  numberString2 = "";
   display.textContent = "";
 }
 
 function changeSign() {
-  console.log(numberString);
   numberString = numberString * -1;
   display.textContent = numberString;
 }
 
+function assignValues() {
+  if (equationArray.length == 3) {
+    number1 = equationArray.shift();
+    operator = equationArray.shift();
+    number2 = equationArray.shift();
+    let total = operate(operator, number1, number2);
+    equationArray.unshift(total);
+    display.textContent = total;
+    number1 = "";
+    number2 = "";
+  }
+}
+
 let numberString = "";
-let numberString2 = "";
+let number1, number2;
 let equationArray = [];
 let display = document.querySelector("#display");
 let clearButton = document.getElementById("clear");
 let addButton = document.getElementById("add");
+let subtractButton = document.getElementById("subtract");
+let multiplyButton = document.getElementById("multiply");
+let divideButton = document.getElementById("divide");
 let changeSignButton = document.getElementById("changeSign");
 let equalsButton = document.getElementById("equals");
+let decimalButton = document.getElementById("decimal");
 let numberButtons = document.querySelectorAll(`button[data-num^='num']`);
 
 for (num of numberButtons) {
@@ -77,21 +66,44 @@ clearButton.addEventListener("click", clear);
 changeSignButton.addEventListener("click", changeSign);
 
 addButton.addEventListener("click", () => {
-  equationArray.push(parseInt(display.textContent));
+  equationArray.push(parseFloat(display.textContent));
+  assignValues(equationArray);
   equationArray.push("+");
   numberString = "";
-  console.log(equationArray);
-  display.textContent = "";
+});
+
+subtractButton.addEventListener("click", () => {
+  equationArray.push(parseFloat(display.textContent));
+  assignValues(equationArray);
+  equationArray.push("-");
+  numberString = "";
+});
+
+multiplyButton.addEventListener("click", () => {
+  equationArray.push(parseFloat(display.textContent));
+  assignValues(equationArray);
+  equationArray.push("x");
+  numberString = "";
+});
+
+divideButton.addEventListener("click", () => {
+  equationArray.push(parseFloat(display.textContent));
+  assignValues(equationArray);
+  equationArray.push("/");
+  numberString = "";
 });
 
 equalsButton.addEventListener("click", () => {
-  equationArray.push(parseInt(display.textContent));
-  console.log(equationArray);
-  numberString = equationArray.shift();
-  console.log(numberString);
+  equationArray.push(parseFloat(display.textContent));
+  number1 = equationArray.shift();
   operator = equationArray.shift();
-  console.log(operator);
-  numberString2 = equationArray.shift();
-  console.log(numberString2);
-  display.textContent = operate(operator, numberString, numberString2);
+  number2 = equationArray.shift();
+  let total = operate(operator, number1, number2);
+  display.textContent = total;
+  numberString = total;
+});
+
+decimalButton.addEventListener("click", () => {
+  numberString += ".";
+  display.textContent = numberString;
 });
