@@ -36,7 +36,7 @@ function assignValues() {
     number2 = equationArray.shift();
     let total = operate(operator, number1, number2);
     equationArray.unshift(total);
-    display.textContent = total;
+    display.textContent = Number(total.toFixed(6));
     number1 = "";
     number2 = "";
   }
@@ -100,7 +100,7 @@ equalsButton.addEventListener("click", () => {
   operator = equationArray.shift();
   number2 = equationArray.shift();
   let total = operate(operator, number1, number2);
-  display.textContent = total;
+  display.textContent = Number(total.toFixed(6));
   numberString = total;
 });
 
