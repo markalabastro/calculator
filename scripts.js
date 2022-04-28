@@ -13,7 +13,7 @@ function operate(operator, a, b) {
 function getNumber(e) {
   let addDigit = e.target.value;
   numberString += addDigit;
-  display.textContent = parseFloat(numberString);
+  display.textContent = numberString;
 }
 
 function clear() {
@@ -26,20 +26,39 @@ function clear() {
 
 function changeSign() {
   numberString = numberString * -1;
-  display.textContent = numberString;
+  display.textContent = Number(numberString.toFixed(6));
 }
 
 function assignValues() {
   if (equationArray.length == 3) {
+    console.log("this" + equationArray);
     number1 = equationArray.shift();
     operator = equationArray.shift();
     number2 = equationArray.shift();
+    if (isNaN(number2)) {
+      operator = number2;
+      number2 = "";
+    }
     let total = operate(operator, number1, number2);
     equationArray.unshift(total);
     display.textContent = Number(total.toFixed(6));
+    if (operator == "/" && number2 == 0) {
+      display.textContent = "You cannot divide by 0";
+    }
     number1 = "";
     number2 = "";
   }
+}
+
+function catchErrors(sign) {
+  console.log(equationArray);
+  if (isNaN(equationArray[0])) {
+    equationArray = [];
+    display.textContent = "";
+  } else if (isNaN(equationArray[1])) {
+    equationArray[1];
+  }
+  console.log(equationArray);
 }
 
 let numberString = "";
@@ -70,6 +89,7 @@ addButton.addEventListener("click", () => {
   equationArray.push(parseFloat(display.textContent));
   assignValues(equationArray);
   equationArray.push("+");
+  catchErrors();
   numberString = "";
 });
 
@@ -77,6 +97,7 @@ subtractButton.addEventListener("click", () => {
   equationArray.push(parseFloat(display.textContent));
   assignValues(equationArray);
   equationArray.push("-");
+  catchErrors();
   numberString = "";
 });
 
@@ -84,6 +105,7 @@ multiplyButton.addEventListener("click", () => {
   equationArray.push(parseFloat(display.textContent));
   assignValues(equationArray);
   equationArray.push("x");
+  catchErrors();
   numberString = "";
 });
 
@@ -91,16 +113,21 @@ divideButton.addEventListener("click", () => {
   equationArray.push(parseFloat(display.textContent));
   assignValues(equationArray);
   equationArray.push("/");
+  catchErrors();
   numberString = "";
 });
 
 equalsButton.addEventListener("click", () => {
   equationArray.push(parseFloat(display.textContent));
+
   number1 = equationArray.shift();
   operator = equationArray.shift();
   number2 = equationArray.shift();
   let total = operate(operator, number1, number2);
   display.textContent = Number(total.toFixed(6));
+  if (operator == "/" && number2 == 0) {
+    display.textContent = "Cannot compute / 0";
+  }
   numberString = total;
 });
 

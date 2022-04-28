@@ -1,10 +1,19 @@
-body {
-  background-color: #333333;
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@900&display=swap');
+
+*, *:before, *:after {
+  box-sizing: border-box;
 }
 
+body {
+  font-family: 'Inconsolata', monospace;
+  background-color: #333333;
+
+}
+
+
 button {
+  font-family: 'Inconsolata', monospace;
   font-size: 1.9rem;
-  width: 50px;
   height: 50px;
 }
 
@@ -17,21 +26,25 @@ button {
 }
 
 .grid-calculator {
+  width:50vw;
+  background-color: rgb(4, 71, 129);
   display: grid;
-  gap: 10px;
   border: 1px solid black;
   padding: 60px 30px;
   border-radius: 15px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
 }
 
 button[data-num="num0"] {
-  width: 104px;
+  grid-column: 1 / span 2;
 }
 
 #display {
   padding: 5px;
-  width: 201px;
   height: 40px;
   background-color: white;
   font-size: 2.3rem;
+  text-align: right;
+  grid-column: 1 / span 4;
 }
